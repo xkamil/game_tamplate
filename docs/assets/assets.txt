@@ -1,5 +1,8 @@
 d:assets:assets:0:application/unknown:1
 i:badlogic.jpg:badlogic-ba3e909e98a4c58c6a15f043f2e1a8a7.jpg:68465:image/jpeg:1
+i:bullet.png:bullet-9e3b94d0b799cf9a210f22f72beeb2c3.png:37675:image/png:1
+i:dot.png:dot-c584ed3d7995397d809506786d813ed8.png:136:image/png:1
+i:soldier.png:soldier-cdfa9c9b8f6bb1162d9ac72dec19babc.png:35476:image/png:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:particles.fragment-b90524761fdf09b0a836056d590c30b8.glsl:820:application/unknown:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:particles.vertex-f25b8b2fae10b9bfa09bfdd484923148.glsl:2886:application/unknown:1
 t:com/badlogic/gdx/graphics/g3d/shaders/default.fragment.glsl:default.fragment-e1c018bd48044c8b67c7bbc53145e540.glsl:5874:application/unknown:1
