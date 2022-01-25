@@ -16,6 +16,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Game extends ApplicationAdapter {
 
+  public enum Weapon {
+    PISTOL(200),
+    AUTOMATIC_RIFLE(250),
+    SHOTGUN(300);
+
+    public final int bulletSpeed;
+
+    Weapon(int bulletSpeed) {
+      this.bulletSpeed = bulletSpeed;
+    }
+  }
+
   public static class Bullet {
 
     public final Sprite sprite;
@@ -45,12 +57,11 @@ public class Game extends ApplicationAdapter {
   Sprite bulletSprite;
   Sprite playerSprite;
   Texture dotTexture;
+  Weapon currentWeapon = Weapon.PISTOL;
 
   private Array<Bullet> bullets = new Array<>();
 
-
   private int playerSpeed = 150;
-  private int bulletSpeed = 200;
 
   @Override
   public void create() {
@@ -68,6 +79,7 @@ public class Game extends ApplicationAdapter {
   @Override
   public void render() {
     //updates
+    selectWeapon();
     playerMovement();
     bullets.forEach(Bullet::updatePosition);
 
@@ -106,9 +118,7 @@ public class Game extends ApplicationAdapter {
     Vector2 playerLookDirection = getPlayerLookingDirection();
     playerSprite.setRotation(playerLookDirection.angleDeg());
 
-    if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
-      shoot();
-    }
+    shoot();
   }
 
   private Vector2 getMousePosition() {
@@ -127,11 +137,49 @@ public class Game extends ApplicationAdapter {
     return new Vector2(mousePosition.x - playerVector.x, mousePosition.y - playerVector.y).nor();
   }
 
+  private void selectWeapon(){
+    if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
+      currentWeapon = Weapon.PISTOL;
+    }
+
+    if(Gdx.input.isKeyJustPressed(Keys.NUM_2)){
+      currentWeapon = Weapon.AUTOMATIC_RIFLE;
+    }
+
+    if(Gdx.input.isKeyJustPressed(Keys.NUM_3)){
+      currentWeapon = Weapon.SHOTGUN;
+    }
+  }
+
   private void shoot() {
     Vector2 direction = getPlayerLookingDirection();
     float x = playerSprite.getX() + playerSprite.getOriginX();
     float y = playerSprite.getY() + playerSprite.getOriginY();
-    Bullet bullet = new Bullet(x, y, new Sprite(dotTexture), direction, bulletSpeed);
-    bullets.add(bullet);
+
+    if (currentWeapon == Weapon.PISTOL) {
+      if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
+        Bullet bullet = new Bullet(x, y, new Sprite(dotTexture), direction, currentWeapon.bulletSpeed);
+        bullets.add(bullet);
+      }
+    }
+
+    if (currentWeapon == Weapon.AUTOMATIC_RIFLE) {
+      if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+        Bullet bullet = new Bullet(x, y, new Sprite(dotTexture), direction, currentWeapon.bulletSpeed);
+        bullets.add(bullet);
+      }
+    }
+
+    if (currentWeapon == Weapon.SHOTGUN) {
+      if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
+        var direction1 = direction.cpy().setAngleDeg(direction.angleDeg() + 10);
+        var direction2 = direction.cpy().setAngleDeg(direction.angleDeg() - 10);
+
+        Bullet bullet1 = new Bullet(x, y, new Sprite(dotTexture), direction1, currentWeapon.bulletSpeed);
+        Bullet bullet2 = new Bullet(x, y, new Sprite(dotTexture), direction2, currentWeapon.bulletSpeed);
+        Bullet bullet3 = new Bullet(x, y, new Sprite(dotTexture), direction, currentWeapon.bulletSpeed);
+        bullets.add(bullet1, bullet2, bullet3);
+      }
+    }
   }
 }
