@@ -172,8 +172,8 @@ public class Game extends ApplicationAdapter {
 
     if (currentWeapon == Weapon.SHOTGUN) {
       if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
-        var direction1 = direction.cpy().setAngleDeg(direction.angleDeg() + 10);
-        var direction2 = direction.cpy().setAngleDeg(direction.angleDeg() - 10);
+        Vector2 direction1 = direction.cpy().setAngleDeg(direction.angleDeg() + 10);
+        Vector2 direction2 = direction.cpy().setAngleDeg(direction.angleDeg() - 10);
 
         Bullet bullet1 = new Bullet(x, y, new Sprite(dotTexture), direction1, currentWeapon.bulletSpeed);
         Bullet bullet2 = new Bullet(x, y, new Sprite(dotTexture), direction2, currentWeapon.bulletSpeed);
